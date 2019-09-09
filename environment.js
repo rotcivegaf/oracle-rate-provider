@@ -1,22 +1,34 @@
 const ropstenContracts = require('./ropstenContracts.js');
 
-// For each signer haves an array of data
-// Each data contains an array of
-//    currency: The other part of the pair ETH/...
-//    exchangeId: The echange who provide the rate, look in ./src/rate.js
+const primaryCurrency = 'RCN';
+const oracles = ['ETH', 'BTC', 'USD', 'ARS'];
+const reutersUrl = 'https://www.reuters.com/assets/';
+
 const signersData = [
-  [
-    {
-      currency: 'ETH',
-      exchangeId: 'binance',
-    }
-  ],
-  [
-    {
-      currency: 'ETH',
-      exchangeId: 'uniswap',
-    }
-  ]
+  {
+    currency_from: 'RCN',
+    currency_to: 'ETH',
+    exchangesIds: ['binance', 'uniswap', 'huobipro', 'hitbtc'],
+    decimals: 18
+  },
+  {
+    currency_from: 'RCN',
+    currency_to: 'BTC',
+    exchangesIds: ['binance', 'huobipro', 'bittrex', 'upbit', 'hitbtc'],
+    decimals: 18
+  },
+  {
+    currency_from: 'BTC',
+    currency_to: 'USD',
+    exchangesIds: ['bittrex', 'kraken', 'gemini'],
+    decimals: 2
+  },
+  {
+    currency_from: 'USD',
+    currency_to: 'ARS',
+    exchangesIds: ['reuters'],
+    decimals: 2
+  }
 ];
 
 module.exports = {
@@ -26,5 +38,7 @@ module.exports = {
   oracle: ropstenContracts.oracle,
   signersData: signersData,
   markets: ropstenContracts.markets,
-  wait: 15 * 60 * 1000 // 15 min
+  primaryCurrency: primaryCurrency,
+  oracles: oracles,
+  reutersUrl: reutersUrl
 };

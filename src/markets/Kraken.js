@@ -1,7 +1,7 @@
 const Market = require('./Market.js');
 const ccxt = require ('ccxt');
 
-module.exports = class Binanace extends Market {
+module.exports = class Kraken extends Market {
   constructor(w3, exchangeId) {
     super(w3);
 
@@ -11,7 +11,7 @@ module.exports = class Binanace extends Market {
   async getRate(currency_from, currency_to, decimals) {
     const pair = await this.market.fetchTicker(currency_from + '/' + currency_to);
     
-    const rate = this.toEquivalent(pair.info.lastPrice, decimals);
+    const rate = this.toEquivalent(pair.last, decimals);
 
     return rate;
   }
